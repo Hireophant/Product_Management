@@ -6,6 +6,7 @@ const database = require("./config/database");
 database.connect();
 
 const route = require("./routes/clients/index.route");
+const adminRoute = require("./routes/admin/index.route");
 
 
 
@@ -19,6 +20,7 @@ app.use(express.static("public"));
 
 //Routes
 route(app);
+adminRoute(app);
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
