@@ -167,3 +167,23 @@ module.exports.editPost = async (req, res) => {
     res.redirect(`${systemConfig.prefixAdmin}/products`);
 }
 
+//[GET] /admin/products/detail/:id
+module.exports.detail = async (req, res) => {
+    try{
+        const id = req.params.id;
+        const find = {
+            _id: id,
+            deleted: false,
+        };
+        const product = await Product.findOne(find);
+        res.render("admin/pages/products/detail", {
+            pageTitle: product.title,
+            product: product,
+        });
+    } catch (error) {
+        req.flash("error", "Không tìm thấy sản phẩm!");
+        res.redirect(`${systemConfig.prefixAdmin}/products`);
+    }
+}
+
+
