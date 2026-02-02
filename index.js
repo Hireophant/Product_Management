@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 
-app.set("views", "./views");
+app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 
 
@@ -45,7 +45,9 @@ app.use(flash());
 //App local variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
-app.use(express.static("public"));
+
+
+app.use(express.static(`${__dirname}/public`));
 
 //Routes
 route(app);
