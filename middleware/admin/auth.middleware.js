@@ -10,6 +10,7 @@ module.exports.requireAuth = async (req, res, next) => {
       "-password",
     );
     if (!user) {
+      res.clearCookie("token");
       res.redirect(`${systemConfig.prefixAdmin}/auth/login`);
     } else {
       const role = await Role.findOne({
@@ -17,6 +18,7 @@ module.exports.requireAuth = async (req, res, next) => {
       }).select("title permissions");
 
       if (!role) {
+        res.clearCookie("token");
         res.redirect(`${systemConfig.prefixAdmin}/auth/login`);
       }
       res.locals.user = user;
