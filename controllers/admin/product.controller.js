@@ -49,8 +49,6 @@ module.exports.index = async (req, res) => {
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip)
     .sort(sort);
-
-  console.log(products);
   res.render("admin/pages/products/index", {
     pageTitle: "Trang Sản Phẩm",
     products: products,
