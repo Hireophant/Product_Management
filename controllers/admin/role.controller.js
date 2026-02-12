@@ -73,7 +73,7 @@ module.exports.permissionsPatch = async (req, res) => {
   try {
     const permissions = JSON.parse(req.body.permissions);
     for (const item of permissions) {
-      await Role.updateOne({ _id: item.id }, { permission: item.permissions });
+      await Role.updateOne({ _id: item.id }, { permissions: item.permissions });
     }
     req.flash("success", "Cập nhật thành công");
     res.redirect(`${systemConfig.prefixAdmin}/roles/permissions`);
