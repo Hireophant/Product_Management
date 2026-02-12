@@ -3,6 +3,7 @@ const methodOverride = require("method-override");
 const path = require("path");
 const bodyParser = require("body-parser");
 const flash = require("express-flash");
+const moment = require("moment");
 
 const multer = require("multer");
 
@@ -43,6 +44,8 @@ app.use(
 
 //App local variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
+
+app.locals.moment = moment;
 
 app.use(express.static(`${__dirname}/public`));
 
