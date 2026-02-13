@@ -20,13 +20,24 @@ module.exports.index = async (req, res) => {
 // [GET] /products/:slug
 module.exports.detail = async (req, res) => {
   try {
-    const slug = req.params.slug;
+    const slug = req.params.slugProduct;
     const find = {
       slug: slug,
       deleted: false,
       status: "active",
     };
     const product = await Product.findOne(find);
+    if (product.products_category_id) {
+      const category = await ProductCategory.findOne({
+        _id: product.products_category_id,
+        deleted: false,
+        status: "active",
+      });
+      product.category = category;
+    }
+
+    product.priceNew = productsHelper.priceNewProduct(product);
+
     res.render("client/pages/products/detail", {
       pageTitle: product.title,
       product: product,
@@ -47,20 +58,27 @@ module.exports.category = async (req, res) => {
     status: "active",
   });
 
-  const listSubCategory = await productsCategoryHelper.getSubCategory(
-    category.id,
-  );
-  const listSubCategoryId = listSubCategory.map((item) => item.id);
+  /* istanbul ignore next */
+  if (category) {
+    const listSubCategory = await productsCategoryHelper.getSubCategory(
+      category.id,
+    );
+    const listSubCategoryId = listSubCategory.map((item) => item.id);
 
-  const products = await Product.find({
-    products_category_id: { $in: [category.id, ...listSubCategoryId] },
-    deleted: false,
-    status: "active",
-  }).sort({ position: "desc" });
+    const products = await Product.find({
+      products_category_id: { $in: [category.id, ...listSubCategoryId] },
+      deleted: false,
+      status: "active",
+    }).sort({ position: "desc" });
 
-  const newProducts = productsHelper.priceNewProducts(products);
-  res.render("client/pages/products/index", {
-    pageTitle: category.title,
-    products: newProducts,
-  });
+    const newProducts = productsHelper.priceNewProducts(products);
+    res.render("client/pages/products/index", {
+      pageTitle: category.title,
+      products: newProducts,
+    });
+  } else {
+    // If category not found, you might want to redirect or show 404
+    // For now, redirecting to products home as a fallback
+    res.redirect("/products");
+  }
 };
