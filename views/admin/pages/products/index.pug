@@ -61,6 +61,7 @@ block main
               th Vị trí
               th Trạng thái
               th Người tạo
+              th Người cập nhật
               th Hành động
           tbody
             each item, index in products
@@ -105,6 +106,15 @@ block main
                   p  #{item.accountFullName}
                   p 
                    +formatDateTime(item.createdBy.createAt)
+
+                td 
+                  - const upadatedBy = item.updatedBy.slice(-1)[0];
+                  if(upadatedBy)
+                    p  #{upadatedBy.accountFullName}
+                    p 
+                     +formatDateTime(upadatedBy.updateAt)
+                  else
+                    p Chưa cập nhật
                 td
                   if(role.permissions.includes("products_view"))
                     a(
