@@ -34,6 +34,12 @@ module.exports.create = async (req, res) => {
 
 // [POST] /admin/products-category/create
 module.exports.createPost = async (req, res) => {
+  // const permissions = res.locals.role.permissions;
+
+  // if (!permissions.includes("products-category_create")) {
+  //   return res.redirect("/403");
+  // }
+
   if (req.body.position == "") {
     const countProduct = await ProductCategory.countDocuments();
     req.body.position = countProduct + 1;
