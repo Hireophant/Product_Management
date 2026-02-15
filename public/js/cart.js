@@ -11,4 +11,5 @@ if (inputsQuantity.length > 0) {
     });
   });
 }
+// Tìm hiểu thêm về AJAX J query để khi cập nhật không cần load lại trang
 // hết cập nhật số lượng sản phẩm trong giỏ hàng
