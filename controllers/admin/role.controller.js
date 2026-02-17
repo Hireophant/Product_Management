@@ -79,6 +79,6 @@ module.exports.permissionsPatch = async (req, res) => {
     res.redirect(`${systemConfig.prefixAdmin}/roles/permissions`);
   } catch (error) {
     req.flash("error", "Cập nhật thất bại");
-    res.redirect(`${systemConfig.prefixAdmin}/roles/permissions`);
+    res.redirect(req.get("Referrer") || "/");
   }
 };
