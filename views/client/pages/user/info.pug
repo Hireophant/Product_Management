@@ -1,0 +1,22 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main 
+    .container 
+        .row 
+            .col-12
+                +box-head("Thông tin tài khoản")
+                form(action="/user/info", method="POST") 
+                    div(class="form-group")
+                        label(for="fullName") Họ tên
+                        input(type="text", class="form-control", id="fullName", name="fullName", value=user.fullName)
+                    div(class="form-group")
+                        label(for="email") Email
+                        input(type="email", class="form-control", id="email", name="email", value=user.email)
+                    div(class="form-group")
+                        label(for="phone") Số điện thoại
+                        input(type="text", class="form-control", id="phone", name="phone", value=user.phone)
+                    div(class="form-group")
+                        label(for="avatar") Ảnh đại diện
+                        input(type="file", class="form-control", id="avatar", name="avatar")
+                    button(type="submit", class="btn btn-primary") Cập nhật
