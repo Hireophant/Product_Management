@@ -32,7 +32,14 @@ app.set("view engine", "pug");
 
 // Flash
 app.use(cookieParser("danhpro"));
-app.use(session({ cookie: { maxAge: 60000 } }));
+app.use(
+  session({
+    cookie: { maxAge: 60000 },
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: false,
+  }),
+);
 app.use(flash());
 
 // End flash
@@ -52,6 +59,13 @@ app.use(express.static(`${__dirname}/public`));
 //Routes
 route(app);
 adminRoute(app);
+
+// 404
+app.use((req, res) => {
+  res.render("client/pages/errors/404", {
+    pageTitle: "404 Not Found",
+  });
+});
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
