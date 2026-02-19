@@ -251,11 +251,11 @@
 /* Chat */
 .chat .inner-body {
     padding: 20px;
-    height: 60vh;
     overflow-y: auto;
     border: 1px solid #ddd;
     border-radius: 8px 8px 0 0;
     border-bottom: none;
+    max-height: 450px;
 }
 
 .chat .inner-foot {
