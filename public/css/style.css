@@ -257,7 +257,11 @@
     border-bottom: none;
     max-height: 450px;
 }
-
+.chat .inner-head .inner-name{
+    display: inline-block;
+    font-weight: 600;
+    margin-left: 5px;
+}
 .chat .inner-foot {
     border: 1px solid #ddd;
     border-radius: 0 0 8px 8px;
