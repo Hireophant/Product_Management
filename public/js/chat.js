@@ -1,3 +1,5 @@
+import * as Popper from "https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js";
+
 // CLIENT_SEND_MESSAGE
 const formSendData = document.querySelector(".chat .inner-foot form");
 if (formSendData) {
@@ -40,3 +42,25 @@ if (bodyChat) {
   bodyChat.scrollTop = bodyChat.scrollHeight;
 }
 // END SCROLL Chat to bottom
+
+// EMOJI PICKER
+const buttonIcon = document.querySelector(".button-icon");
+if (buttonIcon) {
+  const tooltip = document.querySelector(".tooltip");
+  Popper.createPopper(buttonIcon, tooltip);
+  buttonIcon.onclick = () => {
+    tooltip.classList.toggle("show");
+  };
+}
+//Insert emoji
+const emojiPicker = document.querySelector("emoji-picker");
+if (emojiPicker) {
+  const inputChat = document.querySelector(
+    ".chat .inner-form input[name='content']",
+  );
+  emojiPicker.addEventListener("emoji-click", (event) => {
+    const icon = event.detail.unicode;
+    inputChat.value += icon;
+  });
+}
+// END EMOJI PICKER
