@@ -13,6 +13,7 @@ html
         
 
         link(rel="stylesheet", href="/css/style.css")
+        link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.7/viewer.css")
     body
         include ../partials/header.pug
 
@@ -32,6 +33,8 @@ html
         script(src="/socket.io/socket.io.js")
         script(src="/js/socket.js")
         script(type="module" src="/js/chat.js")
+
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.7/viewer.js")
 
         //-file-upload-with-preview
         script(src="https://unpkg.com/file-upload-with-preview@6.0.2/dist/file-upload-with-preview.iife.js")
