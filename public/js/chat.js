@@ -14,11 +14,14 @@ if (formSendData) {
     e.preventDefault();
     const content = e.target.elements.content.value;
     const images = upload.cachedFileArray || [];
-    console.log(images);
     if (content || images.length > 0) {
       //Gửi content hoặc ảnh lên server
-      socket.emit("CLIENT_SEND_MESSAGE", content);
+      socket.emit("CLIENT_SEND_MESSAGE", {
+        content: content,
+        images: images,
+      });
       e.target.elements.content.value = "";
+      upload.resetPreviewPanel();
       socket.emit("CLIENT_SEND_TYPING", "hidden");
     }
   });
@@ -39,9 +42,25 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
     div.classList.add("inner-incoming");
     htmlFullName = `<div class="inner-name">${data.fullName}</div>`;
   }
+
+  let htmlContent = "";
+  if (data.content) {
+    htmlContent = `<div class="inner-content">${data.content}</div>`;
+  }
+
+  let htmlImages = "";
+  if (data.images && data.images.length > 0) {
+    htmlImages += `<div class="inner-images">`;
+    for (const image of data.images) {
+      htmlImages += `<img src="${image}" />`;
+    }
+    htmlImages += `</div>`;
+  }
+
   div.innerHTML = `
         ${htmlFullName}
-        <div class="inner-content">${data.content}</div>
+        ${htmlContent}
+        ${htmlImages}
     `;
   body.insertBefore(div, boxTyping);
   body.scrollTop = body.scrollHeight;

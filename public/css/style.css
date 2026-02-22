@@ -290,7 +290,8 @@
 .chat .inner-outgoing {
     margin-bottom: 15px;
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
 .chat .inner-outgoing .inner-content {
@@ -325,6 +326,25 @@
     padding: 0 10px;
     cursor: pointer;
     margin-left: 5px;
+}
+
+.chat .inner-body .inner-images img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    background: #efefef;
+    padding: 10px;
+    margin: 0 5px 5px 0;
+    border-radius: 5px;
+}
+
+.chat .inner-body .inner-outgoing .inner-images {
+    margin-left: auto;
+    text-align: right;
+}
+
+.chat .inner-body .inner-outgoing .inner-images img {
+    margin: 0 0 5px 5px;
 }
 /* End chat */
 
@@ -385,3 +405,4 @@
     }
 }
 /* End box-typing */
+
