@@ -484,5 +484,20 @@
 .box-user.add [btn-cancel-friend] {
     display: inline-block;
 }
+.box-user [btn-delete-friend] {
+    display: none;
+}
+
+.box-user.refuse [btn-accept-friend] {
+    display: none;
+}
+
+.box-user.refuse [btn-refuse-friend] {
+    display: none;
+}
+
+.box-user.refuse [btn-delete-friend] {
+    display: inline-block;
+}
 
 /* End box-user */
