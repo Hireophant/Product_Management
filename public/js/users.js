@@ -63,6 +63,7 @@ socket.on("SERVER_RETURN_LENGTH_ACCEPT_FRIEND", (data) => {
 
 // SERVER_RETURN_INFO_ACCEPT_FRIEND
 socket.on("SERVER_RETURN_INFO_ACCEPT_FRIEND", (data) => {
+  // Trang lời mời kết bạn
   const dataUsersAccept = document.querySelector("[data-users-accept]");
   if (dataUsersAccept) {
     const userId = dataUsersAccept.getAttribute("data-users-accept");
@@ -127,6 +128,20 @@ socket.on("SERVER_RETURN_INFO_ACCEPT_FRIEND", (data) => {
         socket.emit("CLIENT_ACCEPT_FRIEND", userId);
       });
       // Hết chấp nhận kết bạn
+    }
+  }
+
+  //Trang danh sách người dùng
+  const dataUsersNotFriend = document.querySelector("[data-users-not-friend]");
+  if (dataUsersNotFriend) {
+    const userId = dataUsersNotFriend.getAttribute("data-users-not-friend");
+    if (userId == data.userId) {
+      const boxUserRemove = document.querySelector(
+        `[user-id="${data.infoUserA._id}"]`,
+      );
+      if (boxUserRemove) {
+        dataUsersNotFriend.removeChild(boxUserRemove);
+      }
     }
   }
 });

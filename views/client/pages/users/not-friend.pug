@@ -8,26 +8,26 @@ block main
       .col-12
         +box-head("Danh sách người dùng")
 
-    .row
-    each user in users
-      .col-6
-        div(class="box-user")
-          div(class="inner-avatar")
-            img(
-              src=(user.avatar ? user.avatar : "/images/default-avatar.jpg")
-              alt=user.fullName
-            )
-          div(class="inner-info")
-            div(class="inner-name") #{user.fullName}
-            div(class="inner-buttons")
-              button(
-                class="btn btn-sm btn-primary mr-1"
-                btn-add-friend=user.id
-              ) Kết bạn
-              button(
-                class="btn btn-sm btn-secondary mr-1"
-                btn-cancel-friend=user.id
-              ) Hủy
+    .row(data-users-not-friend=user.id)
+      each userItem in users
+        .col-6(user-id=userItem.id)
+          div(class="box-user")
+            div(class="inner-avatar")
+              img(
+                src=(userItem.avatar ? userItem.avatar : "/images/default-avatar.jpg")
+                alt=userItem.fullName
+              )
+            div(class="inner-info")
+              div(class="inner-name") #{userItem.fullName}
+              div(class="inner-buttons")
+                button(
+                  class="btn btn-sm btn-primary mr-1"
+                  btn-add-friend=userItem.id
+                ) Kết bạn
+                button(
+                  class="btn btn-sm btn-secondary mr-1"
+                  btn-cancel-friend=userItem.id
+                ) Hủy
 
 block scripts
   script(type="module" src="/js/users.js")
