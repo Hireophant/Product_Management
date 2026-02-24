@@ -60,3 +60,23 @@ module.exports.accept = async (req, res) => {
     users: users,
   });
 };
+
+// [GET] /users/friends
+module.exports.friends = async (req, res) => {
+  //Socket
+  usersSocket(res);
+  //End Socket
+  const userId = res.locals.user.id;
+  const myUser = await User.findOne({ _id: userId });
+  const friendList = myUser.friendList;
+  const friendIds = friendList.map((item) => item.user_id);
+  const users = await User.find({
+    status: "active",
+    deleted: false,
+    _id: { $in: friendIds },
+  }).select("id fullName avatar statusOnline");
+  res.render("client/pages/users/friends", {
+    pageTitle: "Danh sách bạn bè",
+    users: users,
+  });
+};
