@@ -1,4 +1,5 @@
 const User = require("../../models/user.model");
+const RoomChat = require("../../models/room-chat.model");
 
 module.exports = async (res) => {
   //SocketIO
@@ -124,33 +125,58 @@ module.exports = async (res) => {
     //Chấp nhận kết bạn
     socket.on("CLIENT_ACCEPT_FRIEND", async (userId) => {
       const myUserId = res.locals.user.id;
+      let roomChat;
 
-      //Xóa id của A khỏi acceptFriends của B
+      //Kiểm tra tồn tại
       const existUserAInB = await User.findOne({
         _id: myUserId,
         acceptFriends: userId,
       });
+      const existUserBInA = await User.findOne({
+        _id: userId,
+        requestFriends: myUserId,
+      });
+      if (existUserAInB && existUserBInA) {
+        //Tạo phòng chat
+        roomChat = new RoomChat({
+          typeRoom: "friend",
+          users: [
+            {
+              user_id: myUserId,
+              role: "superAdmin",
+            },
+            {
+              user_id: userId,
+              role: "superAdmin",
+            },
+          ],
+        });
+        await roomChat.save();
+      }
+
+      //Xóa id của A khỏi acceptFriends của B
+
       if (existUserAInB) {
         await User.updateOne(
           { _id: myUserId },
           {
             $pull: { acceptFriends: userId },
-            $push: { friendList: { user_id: userId, room_chat_id: "" } },
+            $push: {
+              friendList: { user_id: userId, room_chat_id: roomChat._id },
+            },
           },
         );
       }
 
       //Xóa id của B khỏi requestFriends của A
-      const existUserBInA = await User.findOne({
-        _id: userId,
-        requestFriends: myUserId,
-      });
       if (existUserBInA) {
         await User.updateOne(
           { _id: userId },
           {
             $pull: { requestFriends: myUserId },
-            $push: { friendList: { user_id: myUserId, room_chat_id: "" } },
+            $push: {
+              friendList: { user_id: myUserId, room_chat_id: roomChat._id },
+            },
           },
         );
       }

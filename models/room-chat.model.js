@@ -18,6 +18,6 @@ const roomChatSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-const RoomChat = mongoose.model("RoomChat", roomChatSchema, "room_chats");
+const RoomChat = mongoose.model("RoomChat", roomChatSchema, "rooms-chat");
 
 module.exports = RoomChat;

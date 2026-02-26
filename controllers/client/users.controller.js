@@ -75,6 +75,12 @@ module.exports.friends = async (req, res) => {
     deleted: false,
     _id: { $in: friendIds },
   }).select("id fullName avatar statusOnline");
+
+  users.forEach((user) => {
+    const infoUser = friendList.find((item) => item.user_id == user.id);
+    user.roomChatId = infoUser.room_chat_id;
+  });
+
   res.render("client/pages/users/friends", {
     pageTitle: "Danh sách bạn bè",
     users: users,
