@@ -161,3 +161,27 @@ socket.on("SERVER_RETURN_INFO_CANCEL_FRIEND", (data) => {
 });
 
 // End SERVER_RETURN_INFO_CANCEL_FRIEND
+
+//SERVER_RETURN_USER_ONLINE
+socket.on("SERVER_RETURN_USER_ONLINE", (data) => {
+  const dataUsersFriend = document.querySelector("[data-users-friend]");
+  if (dataUsersFriend) {
+    const boxUser = document.querySelector(`[user-id="${data.userId}"]`);
+    if (boxUser) {
+      boxUser.querySelector("[status]").setAttribute("status", "online");
+    }
+  }
+});
+//End SERVER_RETURN_USER_ONLINE
+
+//SERVER_RETURN_USER_OFFLINE
+socket.on("SERVER_RETURN_USER_OFFLINE", (data) => {
+  const dataUsersFriend = document.querySelector("[data-users-friend]");
+  if (dataUsersFriend) {
+    const boxUser = document.querySelector(`[user-id="${data.userId}"]`);
+    if (boxUser) {
+      boxUser.querySelector("[status]").setAttribute("status", "offline");
+    }
+  }
+});
+//End SERVER_RETURN_USER_OFFLINE

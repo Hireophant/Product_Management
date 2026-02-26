@@ -72,6 +72,10 @@ module.exports.loginPost = async (req, res) => {
     },
   );
 
+  _io.emit("SERVER_RETURN_USER_ONLINE", {
+    userId: user.id,
+  });
+
   //Lưu user_id vào collection cart
   await Cart.updateOne(
     {
@@ -95,6 +99,11 @@ module.exports.logout = async (req, res) => {
       statusOnline: "offline",
     },
   );
+
+  _io.emit("SERVER_RETURN_USER_OFFLINE", {
+    userId: res.locals.user.id,
+  });
+
   res.clearCookie("tokenUser");
   res.redirect("/");
 };
