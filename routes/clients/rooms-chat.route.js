@@ -3,4 +3,6 @@ const router = express.Router();
 const controller = require("../../controllers/client/rooms-chat.controller");
 
 router.get("/", controller.roomsChat);
+router.get("/create", controller.create);
+router.post("/create", controller.createPost);
 module.exports = router;
